@@ -186,11 +186,11 @@ exports.process = function (grunt, task, context) {
 	context.scripts.reporters.unshift(getUri(path.relative(outputDirectory,
 		tmpReporter)));
 	// instrument sources
-	var files = context.options.files || '**/*';
+	var files = context.options.files || '*.*';
 	var replacements = [];
 	context.scripts.src.forEach(function (source) {
 		var instrumentedSource = path.join(outputDirectory, source);
-		if (!grunt.file.isMatch(files, instrumentedSource)) {
+		if (!grunt.file.isMatch({matchBase: true}, files, instrumentedSource)) {
 			return;
 		}
 		instrumentedSource = instrument(instrumentedSource, context.temp);
